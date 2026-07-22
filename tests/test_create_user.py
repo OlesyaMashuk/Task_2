@@ -11,14 +11,20 @@ class TestCreateUser:
    
     @allure.title('Создание нового (уникального) пользователя')
     def test_create_new_user_success(self):
-        response = requests.post(f'{Curls.MAIN_URL}{Curls.URL_REGISTRATION}', data=User.generate_data_user())
+        user_data = User.generate_data_user()
+        response = requests.post(f'{Curls.MAIN_URL}{Curls.URL_REGISTRATION}', data=user_data)
         assert response.status_code == 200
-        assert response.json()["success"] is True
+        assert response.json()["success"] == True
+        assert response.json()['user']['email'] == user_data['email']
+        assert response.json()['user']['name'] == user_data['name']
+        assert 'accessToken' in response.json()
+        assert 'refreshToken' in response.json()
 
     @allure.title('Создание (дублирование) пользователя, который уже зарегистирован')
     def test_create_double_user_error(self):
         response = requests.post(f'{Curls.MAIN_URL}{Curls.URL_REGISTRATION}', data=User.data_double)
         assert response.status_code == 403 
+        assert response.reason == 'Forbidden'
         assert 'User already exists' in response.text
 
     @allure.title('Создание пользователя с незаполненными (одним или несколькими) обязательными полями')

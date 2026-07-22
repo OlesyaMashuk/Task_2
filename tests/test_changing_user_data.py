@@ -14,8 +14,9 @@ class TestChangingUserData:
         token = {'Authorization': create_user[3]}
         r = requests.patch(f"{Curls.MAIN_URL}{Curls.CHANGE_USER_DATA}", headers=token, data=payload)
         assert r.status_code == 200
-        assert r.json()['success'] is True
-        assert r.json()['user']['email'] == payload["email"]
+        assert r.json()['success'] == True
+        assert r.json()['user']['email'] == payload['email']
+    
 
     
     @allure.title("Успешное изменение пароля (password) авторизованного пользователя")
@@ -25,6 +26,7 @@ class TestChangingUserData:
         r = requests.patch(f"{Curls.MAIN_URL}{Curls.CHANGE_USER_DATA}", headers=token, data=payload)
         assert r.status_code == 200
         assert r.json().get("success") is True
+        
 
     
     @allure.title("Успешное изменение имени (name) авторизованного пользователя")
@@ -41,4 +43,5 @@ class TestChangingUserData:
         r = requests.patch(f"{Curls.MAIN_URL}{Curls.CHANGE_USER_DATA}", data=User.generate_data_user())
         assert r.status_code == 401
         assert r.json()['success']  == False
+        assert r.reason == 'Unauthorized'
         assert r.json()['message'] == 'You should be authorised'

@@ -8,7 +8,7 @@ from data.ingredients_data import Ingredients
 
 class TestCreateOrder:
     
-    @allure.title("Создание заказа авторизованным пользователем")
+    @allure.title("Создание заказа авторизованным пользователем с выбранными ингредиентами")
     def test_create_order_with_auth(self, create_user):
         token = {'Authorization': create_user[3]}
         r = requests.post(f"{Curls.MAIN_URL}{Curls.URL_CREATE_ORDER}", headers=token, data=Ingredients.valid_ingredients_data)
