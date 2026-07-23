@@ -1,5 +1,5 @@
 
-class Curls:
+class Urls:
     MAIN_URL = 'https://qa-stellarburgers.education-services.ru'
     URL_REGISTRATION = '/api/auth/register' # создание/регистрация польз
     URL_LOGIN = '/api/auth/login' # авторизация польз
@@ -8,3 +8,4 @@ class Curls:
     URL_CREATE_ORDER = '/api/orders' # создание заказа
     URL_GET_USER_ORDERS = '/api/orders' # получение заказа
     headers = {"Content-Type": "application/json"}
+    
